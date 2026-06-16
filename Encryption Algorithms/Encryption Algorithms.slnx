@@ -1,0 +1,8 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="CipherCLI/CipherCLI.vcxproj" />
+  <Project Path="CipherLib/CipherLib.vcxproj" />
+</Solution>
