@@ -31,6 +31,66 @@ std::string CaesarCipher::decrypt(const std::string& text) {
     return reverseCipher.encrypt(text);
 }
 
+
+
+VigenereCipher::VigenereCipher(const std::string& key) : key_(key) {}
+
+std::string VigenereCipher::encrypt(const std::string& text) {
+    std::string result = "";
+    int keyIndex = 0;
+    int keyLength = key_.length();
+
+    for (char c : text) {
+        if (isalpha(c)) {
+            char base = islower(c) ? 'a' : 'A';
+            char keyChar = toupper(key_[keyIndex % keyLength]);
+
+            int shiftAmount = keyChar - 'A';
+            int shift = (c - base + shiftAmount) % 26;
+
+            if (shift < 0) {
+                shift += 26;
+            }
+
+            result += (char)(base + shift);
+            keyIndex++;
+        }
+        else {
+            result += c;
+        }
+    }
+    return result;
+}
+
+std::string VigenereCipher::decrypt(const std::string& text) {
+    std::string result = "";
+    int keyIndex = 0;
+    int keyLength = key_.length();
+
+    for (char c : text) {
+        if (isalpha(c)) {
+            char base = islower(c) ? 'a' : 'A';
+            char keyChar = toupper(key_[keyIndex % keyLength]);
+
+            int shiftAmount = keyChar - 'A';
+            int shift = (c - base - shiftAmount) % 26;
+
+            if (shift < 0) {
+                shift += 26;
+            }
+
+            result += (char)(base + shift);
+            keyIndex++;
+        }
+        else {
+            result += c;
+        }
+    }
+    return result;
+}
+
+
+
 std::string A1Z26Cipher::encrypt(const std::string& text) {
     std::string result = "";
 
