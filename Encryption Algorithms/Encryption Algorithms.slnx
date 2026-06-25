@@ -3,6 +3,6 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="CipherCLI/CipherCLI.vcxproj" />
-  <Project Path="CipherLib/CipherLib.vcxproj" />
+  <Project Path="CipherCLI/CipherCLI.vcxproj" Id="49c8222c-4505-43c8-a43f-6e96b9ed1e91" />
+  <Project Path="CipherLib/CipherLib.vcxproj" Id="46b9fcfc-6b91-48d7-99b4-d08528de17cc" />
 </Solution>
