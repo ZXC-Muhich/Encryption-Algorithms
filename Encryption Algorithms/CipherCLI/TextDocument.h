@@ -33,28 +33,28 @@ public:
         while (std::getline(ss, lineStr)) {
             if (lineStr.empty()) continue;
 
-            size_t delimPos = lineStr.find('|');
-            if (delimPos == std::string::npos) continue;
-
-            std::string type = lineStr.substr(0, delimPos);
-            std::string content = lineStr.substr(delimPos + 1);
-
-            if (type == "TEXT") {
-                addLine(new TextLine(content));
+            if (lineStr.find("Text: ") == 0) {
+                addLine(new TextLine(lineStr.substr(6)));
             }
-            else if (type == "CHECK") {
-                size_t nextDelim = content.find('|');
-                bool checked = (content.substr(0, nextDelim) == "1");
-                std::string item = content.substr(nextDelim + 1);
+            else if (lineStr.find("[ ") == 0 && lineStr.length() >= 6) {
+                bool checked = (lineStr[2] == 'x' || lineStr[2] == 'X');
+                std::string item = lineStr.substr(6);
                 addLine(new ChecklistLine(item, checked));
             }
-            else if (type == "CONTACT") {
-                size_t d1 = content.find('|');
-                size_t d2 = content.find('|', d1 + 1);
-                std::string n = content.substr(0, d1);
-                std::string s = content.substr(d1 + 1, d2 - d1 - 1);
-                std::string e = content.substr(d2 + 1);
-                addLine(new ContactLine(n, s, e));
+            else if (lineStr.find("Contact - ") == 0) {
+                std::string content = lineStr.substr(10);
+                size_t commaPos = content.find(", E-mail: ");
+
+                if (commaPos != std::string::npos) {
+                    std::string fullName = content.substr(0, commaPos);
+                    std::string email = content.substr(commaPos + 10);
+
+                    size_t spacePos = fullName.find(' ');
+                    std::string n = (spacePos != std::string::npos) ? fullName.substr(0, spacePos) : fullName;
+                    std::string s = (spacePos != std::string::npos) ? fullName.substr(spacePos + 1) : "";
+
+                    addLine(new ContactLine(n, s, email));
+                }
             }
         }
     }

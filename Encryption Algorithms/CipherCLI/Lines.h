@@ -15,11 +15,11 @@ public:
     TextLine(const std::string& t) : text(t) {}
 
     void print() const override {
-        std::cout << "Text: " << text << std::endl;
+        std::cout << serialize() << std::endl;
     }
 
     std::string serialize() const override {
-        return "TEXT|" + text;
+        return "Text: " + text;
     }
 };
 
@@ -33,11 +33,11 @@ public:
     }
 
     void print() const override {
-        std::cout << "Contact - " << name << " " << surname << ", E-mail: " << email << std::endl;
+        std::cout << serialize() << std::endl;
     }
 
     std::string serialize() const override {
-        return "CONTACT|" + name + "|" + surname + "|" + email;
+        return "Contact - " + name + " " + surname + ", E-mail: " + email;
     }
 };
 
@@ -48,10 +48,10 @@ public:
     ChecklistLine(const std::string& i, bool c) : item(i), checked(c) {}
 
     void print() const override {
-        std::cout << "[ " << (checked ? "x" : " ") << " ] " << item << std::endl;
+        std::cout << serialize() << std::endl;
     }
 
     std::string serialize() const override {
-        return "CHECK|" + std::to_string(checked) + "|" + item;
+        return "[ " + std::string(checked ? "x" : " ") + " ] " + item;
     }
 };
